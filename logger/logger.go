@@ -35,7 +35,6 @@ func SetLogLevel(newLevel LogLevel) LogLevel {
 }
 
 func now() string {
-	// return time.Now().Format(time.ISO8601)
 	return time.Now().Format(time.RFC3339)
 }
 
@@ -56,13 +55,13 @@ func Fatal(m ...interface{}) {
 func Info(m ...interface{}) {
 	if LOG_LEVEL >= INFO {
 		ci := retrieveCallInfo()
-		log(&LogMessage{ci.packageName, "INFO", fmt.Sprint(m...), bow()}, false)
+		log(&LogMessage{ci.packageName, "INFO", fmt.Sprint(m...), now()}, false)
 	}
 }
 
 func Debug(m ...interface{}) {
 	if LOG_LEVEL >= DEBUG {
 		ci := retrieveCallInfo()
-		log(&LogMessage{fmt.Sprint(ci.packageName, "/")})
+		log(&LogMessage{fmt.Sprint(ci.packageName, "/", ci.fileName, ":", ci.line), "DEBUG", fmt.Sprint(m...), now()}, false)
 	}
 }
